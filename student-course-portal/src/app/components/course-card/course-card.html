@@ -1,0 +1,46 @@
+<div
+  [ngClass]="cardClasses"
+  [ngStyle]="{
+    'border-left':
+      course.gradeStatus == 'passed'
+        ? '6px solid green'
+        : course.gradeStatus == 'failed'
+        ? '6px solid red'
+        : '6px solid gray'
+  }">
+
+  <h3>{{ course.name }}</h3>
+
+  <p>ID: {{ course.id }}</p>
+
+  <p>Code: {{ course.code }}</p>
+
+  <p>Credits: {{ course.credits }}</p>
+
+  <div [ngSwitch]="course.gradeStatus">
+
+    <span *ngSwitchCase="'passed'">
+      🟢 Passed
+    </span>
+
+    <span *ngSwitchCase="'failed'">
+      🔴 Failed
+    </span>
+
+    <span *ngSwitchCase="'pending'">
+      ⚪ Pending
+    </span>
+
+  </div>
+
+  <button (click)="enroll()">
+    Enroll
+  </button>
+
+  <button (click)="isExpanded = !isExpanded">
+    Show Details
+  </button>
+
+  <hr>
+
+</div>
