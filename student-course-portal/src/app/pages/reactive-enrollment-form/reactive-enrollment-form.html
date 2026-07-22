@@ -1,0 +1,128 @@
+<!--
+  Task 50: [formGroup]="enrollForm" binds the template to the reactive model.
+  formControlName="..." connects each input to its corresponding FormControl.
+  No [(ngModel)] is needed in reactive forms — the model lives entirely in TypeScript.
+-->
+<div class="form-container">
+  <h2>Enrollment Request (Reactive)</h2>
+
+  <form [formGroup]="enrollForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <!-- ── Student Name ── -->
+    <div class="form-group">
+      <label for="rStudentName">Student Name</label>
+      <input id="rStudentName" type="text" formControlName="studentName" placeholder="Enter your full name">
+      <span class="error-msg"
+        *ngIf="enrollForm.get('studentName')?.touched && enrollForm.get('studentName')?.errors?.['required']">
+        Name is required.
+      </span>
+      <span class="error-msg"
+        *ngIf="enrollForm.get('studentName')?.touched && enrollForm.get('studentName')?.errors?.['minlength']">
+        Name must be at least 3 characters.
+      </span>
+    </div>
+
+    <!-- ── Student Email ── -->
+    <div class="form-group">
+      <label for="rStudentEmail">Student Email</label>
+      <input id="rStudentEmail" type="email" formControlName="studentEmail" placeholder="Enter your email">
+      <span class="error-msg"
+        *ngIf="enrollForm.get('studentEmail')?.touched && enrollForm.get('studentEmail')?.errors?.['required']">
+        Email is required.
+      </span>
+      <span class="error-msg"
+        *ngIf="enrollForm.get('studentEmail')?.touched && enrollForm.get('studentEmail')?.errors?.['email']">
+        Please enter a valid email.
+      </span>
+      <!--
+        Task 55: Async validator error — shown after the 800ms check resolves.
+        'test@' emails return { emailTaken: true }.
+      -->
+      <span class="error-msg"
+        *ngIf="enrollForm.get('studentEmail')?.touched && enrollForm.get('studentEmail')?.errors?.['emailTaken']">
+        This email is already taken.
+      </span>
+      <span class="info-msg" *ngIf="enrollForm.get('studentEmail')?.pending">
+        Checking email availability...
+      </span>
+    </div>
+
+    <!-- ── Course ID ── -->
+    <div class="form-group">
+      <label for="rCourseId">Course ID</label>
+      <input id="rCourseId" type="text" formControlName="courseId" placeholder="e.g. ANG101">
+      <span class="error-msg"
+        *ngIf="enrollForm.get('courseId')?.touched && enrollForm.get('courseId')?.errors?.['required']">
+        Course ID is required.
+      </span>
+      <!--
+        Task 54: Custom validator error message for noCourseCode.
+        Brackets around 'noCourseCode' are needed because the key is a dynamic string.
+      -->
+      <span class="error-msg"
+        *ngIf="enrollForm.get('courseId')?.errors?.['noCourseCode']">
+        Course code starting with XX is not allowed.
+      </span>
+    </div>
+
+    <!-- ── Preferred Semester ── -->
+    <div class="form-group">
+      <label for="rSemester">Preferred Semester</label>
+      <select id="rSemester" formControlName="preferredSemester">
+        <option value="Odd">Odd</option>
+        <option value="Even">Even</option>
+      </select>
+    </div>
+
+    <!-- ── Agree to Terms ── -->
+    <div class="form-group form-group--checkbox">
+      <label>
+        <input type="checkbox" formControlName="agreeToTerms">
+        I agree to the terms and conditions
+      </label>
+      <span class="error-msg"
+        *ngIf="enrollForm.get('agreeToTerms')?.touched && enrollForm.get('agreeToTerms')?.errors?.['required']">
+        You must agree to the terms.
+      </span>
+    </div>
+
+    <!-- ── Additional Courses (FormArray) ── -->
+    <!--
+      Task 56: formArrayName="additionalCourses" binds to the FormArray.
+      Each item in the array is rendered with [formControl]="ctrl".
+    -->
+    <div formArrayName="additionalCourses" class="additional-courses">
+      <h4>Additional Courses</h4>
+      <div
+        *ngFor="let ctrl of additionalCourses.controls; let i = index"
+        class="array-item">
+        <!--
+          Task 56: Cast each item as FormControl using the typed getter.
+          This avoids the ugly 'as FormControl' cast in the template.
+        -->
+        <input
+          [formControl]="$any(ctrl)"
+          placeholder="Course code e.g. TS102"
+        >
+        <button type="button" class="btn-remove" (click)="removeCourse(i)">✕ Remove</button>
+        <span class="error-msg"
+          *ngIf="ctrl.touched && ctrl.errors?.['required']">
+          Course code is required.
+        </span>
+      </div>
+      <button type="button" class="btn-add" (click)="addCourse()">+ Add Another Course</button>
+    </div>
+
+    <!-- ── Submit ── -->
+    <div class="form-actions">
+      <!--
+        Task 51: Submit disabled when form is invalid.
+        enrollForm.invalid checks all controls including FormArray items.
+      -->
+      <button type="submit" [disabled]="enrollForm.invalid" class="btn-submit">
+        Submit
+      </button>
+    </div>
+
+  </form>
+</div>

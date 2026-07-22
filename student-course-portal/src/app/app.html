@@ -1,0 +1,10 @@
+<app-header></app-header>
+
+<!-- Task 91: Global Loading Spinner bound to loadingService.isLoading$ using async pipe -->
+<div class="global-spinner-overlay" *ngIf="loadingService.isLoading$ | async">
+  <div class="spinner"></div>
+</div>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

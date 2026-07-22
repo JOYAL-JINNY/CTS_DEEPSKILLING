@@ -1,0 +1,46 @@
+{
+  "courses": [
+    {
+      "id": 101,
+      "name": "Angular Fundamentals",
+      "code": "ANG101",
+      "credits": 4,
+      "gradeStatus": "passed"
+    },
+    {
+      "id": 102,
+      "name": "TypeScript Essentials",
+      "code": "TS102",
+      "credits": 3,
+      "gradeStatus": "failed"
+    },
+    {
+      "id": 103,
+      "name": "RxJS Core Concepts",
+      "code": "RX103",
+      "credits": 3,
+      "gradeStatus": "pending"
+    },
+    {
+      "id": 104,
+      "name": "Node.js & Express",
+      "code": "NOD104",
+      "credits": 4,
+      "gradeStatus": "pending"
+    },
+    {
+      "id": 105,
+      "name": "MongoDB Basics",
+      "code": "MDB105",
+      "credits": 2,
+      "gradeStatus": "passed"
+    },
+    {
+      "id": 106,
+      "name": "Zero Credits Demo",
+      "code": "ZERO106",
+      "credits": 0,
+      "gradeStatus": "pending"
+    }
+  ]
+}

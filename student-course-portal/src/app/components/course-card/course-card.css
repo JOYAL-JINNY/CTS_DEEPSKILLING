@@ -1,0 +1,111 @@
+/* Base card style (existing) */
+.course-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Task 29: Applied when the course is enrolled in EnrollmentService */
+.card--enrolled {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+/* Task 29: Applied when credits >= 4 (high-credit course) */
+.card--full {
+  background-color: #fefce8;
+  border-color: #fde047;
+}
+
+/* Task 31: Expanded state — increases card height to reveal detail panel */
+.expanded {
+  min-height: 180px;
+}
+
+/* Task 27: Grade status badges */
+.grade-badge-container {
+  margin: 8px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Task 27: Green badge for passed */
+.badge--passed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Task 27: Red badge for failed */
+.badge--failed {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Task 27: Grey badge for pending */
+.badge--pending {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+/* Details panel shown when expanded */
+.details-panel {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Enroll / Unenroll buttons */
+.btn-enroll, .btn-details {
+  margin-top: 10px;
+  margin-right: 6px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-enroll {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-enroll:hover {
+  opacity: 0.85;
+}
+
+.btn-unenroll {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-details {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.btn-details:hover {
+  background-color: #d1d5db;
+}

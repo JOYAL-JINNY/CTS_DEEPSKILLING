@@ -1,0 +1,135 @@
+<!--
+  Task 39: Template-driven enrollment form.
+  #enrollForm="ngForm" — template reference variable gives access to the NgForm instance.
+  The NgForm directive tracks overall validity, touched state, and value for the whole form.
+  (ngSubmit) fires when the native form submit event occurs.
+
+  WHY #enrollForm="ngForm"?
+  The NgForm directive instance exposes .value (all field values), .valid, .invalid,
+  .touched, and .resetForm(). Without this variable we can't access them in the template.
+-->
+<div class="form-container">
+  <h2>Enrollment Request</h2>
+
+  <!-- Task 46: Success message — shown after valid submit, hidden otherwise -->
+  <div class="success-banner" *ngIf="submitted">
+    ✅ Enrollment request submitted successfully!
+  </div>
+
+  <form #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)" novalidate>
+
+    <!-- ── Student Name ── -->
+    <div class="form-group">
+      <label for="studentName">Student Name</label>
+      <!--
+        Task 39: [(ngModel)] two-way binds to form model. name="studentName" is MANDATORY
+        for Angular to register this control under form.value.studentName.
+        Task 43: required + minlength="3" validators.
+        Task 44: #nameCtrl="ngModel" exposes the control state in the template.
+      -->
+      <input
+        id="studentName"
+        type="text"
+        name="studentName"
+        [(ngModel)]="studentName"
+        #nameCtrl="ngModel"
+        required
+        minlength="3"
+        placeholder="Enter your full name"
+      >
+      <!-- Task 44: Conditional error messages — only shown after the field is touched -->
+      <span class="error-msg" *ngIf="nameCtrl.touched && nameCtrl.errors?.['required']">
+        Name is required.
+      </span>
+      <span class="error-msg" *ngIf="nameCtrl.touched && nameCtrl.errors?.['minlength']">
+        Name must be at least 3 characters.
+      </span>
+    </div>
+
+    <!-- ── Student Email ── -->
+    <div class="form-group">
+      <label for="studentEmail">Student Email</label>
+      <input
+        id="studentEmail"
+        type="email"
+        name="studentEmail"
+        [(ngModel)]="studentEmail"
+        #emailCtrl="ngModel"
+        required
+        email
+        placeholder="Enter your email"
+      >
+      <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">
+        Email is required.
+      </span>
+      <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.errors?.['email']">
+        Please enter a valid email address.
+      </span>
+    </div>
+
+    <!-- ── Course ID ── -->
+    <div class="form-group">
+      <label for="courseId">Course ID</label>
+      <input
+        id="courseId"
+        type="number"
+        name="courseId"
+        [(ngModel)]="courseId"
+        #courseIdCtrl="ngModel"
+        required
+        placeholder="e.g. 101"
+      >
+      <span class="error-msg" *ngIf="courseIdCtrl.touched && courseIdCtrl.errors?.['required']">
+        Course ID is required.
+      </span>
+    </div>
+
+    <!-- ── Preferred Semester ── -->
+    <div class="form-group">
+      <label for="preferredSemester">Preferred Semester</label>
+      <select
+        id="preferredSemester"
+        name="preferredSemester"
+        [(ngModel)]="preferredSemester"
+        required
+      >
+        <option value="">-- Select --</option>
+        <option value="Odd">Odd</option>
+        <option value="Even">Even</option>
+      </select>
+    </div>
+
+    <!-- ── Agree to Terms ── -->
+    <div class="form-group form-group--checkbox">
+      <label>
+        <input
+          type="checkbox"
+          name="agreeToTerms"
+          [(ngModel)]="agreeToTerms"
+          #termsCtrl="ngModel"
+          required
+        >
+        I agree to the terms and conditions
+      </label>
+      <span class="error-msg" *ngIf="termsCtrl.touched && termsCtrl.errors?.['required']">
+        You must agree to the terms.
+      </span>
+    </div>
+
+    <!-- ── Buttons ── -->
+    <div class="form-actions">
+      <!--
+        Task 41: Submit button disabled when the form is invalid.
+        enrollForm.invalid is true when any required field fails validation.
+      -->
+      <button type="submit" [disabled]="enrollForm.invalid" class="btn-submit">
+        Submit
+      </button>
+      <!-- Task 47: Reset button calls enrollForm.resetForm() to clear fields and validation state -->
+      <button type="button" (click)="onReset(enrollForm)" class="btn-reset">
+        Reset
+      </button>
+    </div>
+
+  </form>
+</div>

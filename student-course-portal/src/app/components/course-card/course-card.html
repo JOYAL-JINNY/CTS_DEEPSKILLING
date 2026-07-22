@@ -1,0 +1,39 @@
+<!--
+  Task 100: Check (enrolledIds$ | async) to determine class and button label.
+-->
+<ng-container *ngIf="enrolledIds$ | async as enrolledIds">
+  <div class="course-card"
+       appHighlight="lightyellow"
+       [ngClass]="cardClasses"
+       [class.card--enrolled]="enrolledIds.includes(course.id)"
+       [ngStyle]="borderStyle">
+
+    <h3>{{ course.name }}</h3>
+    <p><strong>ID:</strong> {{ course.id }}</p>
+    <p><strong>Code:</strong> {{ course.code }}</p>
+
+    <p><strong>Credits:</strong> {{ course.credits | creditLabel }}</p>
+
+    <div [ngSwitch]="course.gradeStatus" class="grade-badge-container">
+      <span *ngSwitchCase="'passed'"  class="badge badge--passed">✔ Passed</span>
+      <span *ngSwitchCase="'failed'"  class="badge badge--failed">✘ Failed</span>
+      <span *ngSwitchDefault          class="badge badge--pending">⏳ Pending</span>
+    </div>
+
+    <button class="btn-details" (click)="$event.stopPropagation(); toggleExpand()">
+      {{ isExpanded ? 'Hide Details' : 'Show Details' }}
+    </button>
+
+    <div class="details-panel" *ngIf="isExpanded">
+      <p><em>Grade Status:</em> {{ course.gradeStatus | titlecase }}</p>
+      <p><em>Enrolled:</em> {{ enrolledIds.includes(course.id) ? 'Yes' : 'No' }}</p>
+    </div>
+
+    <!-- Task 100: Button label and class depend on NgRx state -->
+    <button class="btn-enroll"
+            [class.btn-unenroll]="enrolledIds.includes(course.id)"
+            (click)="onEnrollToggle($event)">
+      {{ enrolledIds.includes(course.id) ? 'Unenroll' : 'Enroll' }}
+    </button>
+  </div>
+</ng-container>

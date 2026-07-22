@@ -1,0 +1,34 @@
+<h2>Available Courses</h2>
+
+<ng-container *ngIf="!(isLoading$ | async); else loadingTpl">
+
+  <ng-container *ngIf="error$ | async as error">
+    <p class="error-msg" style="color: red; padding: 20px; font-weight: bold;">{{ error }}</p>
+  </ng-container>
+
+  <!-- Task 96: Render using async pipe -->
+  <ng-container *ngIf="(courses$ | async) as courses">
+    <ng-container *ngIf="courses.length > 0; else noCourses">
+      <div class="course-grid">
+        <app-course-card
+          *ngFor="let course of courses; trackBy: trackByCourseId"
+          [course]="course"
+          (enrollRequested)="onEnroll($event)"
+          (click)="navigateToDetail(course.id)"
+          style="cursor: pointer;"
+        ></app-course-card>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noCourses>
+    <p class="no-courses-msg" *ngIf="!(error$ | async)">No courses available.</p>
+  </ng-template>
+
+</ng-container>
+
+<ng-template #loadingTpl>
+  <p class="loading-msg">⏳ Loading courses from API...</p>
+</ng-template>
+
+<p *ngIf="selectedCourseId">Selected course ID: {{ selectedCourseId }}</p>

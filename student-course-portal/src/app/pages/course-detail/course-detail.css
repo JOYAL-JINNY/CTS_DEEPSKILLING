@@ -1,0 +1,41 @@
+.detail-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 16px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 28px;
+}
+
+h2 { margin-bottom: 20px; color: #1e293b; }
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-label { color: #6b7280; font-weight: 500; }
+.detail-value { font-weight: 600; color: #1e293b; }
+
+.status-passed  { color: #16a34a; }
+.status-failed  { color: #dc2626; }
+.status-pending { color: #9ca3af; }
+
+.not-found { color: #6b7280; text-align: center; margin-top: 40px; }
+.not-found a { color: #3b82f6; }
